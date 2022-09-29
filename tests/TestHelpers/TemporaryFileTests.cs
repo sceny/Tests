@@ -1,13 +1,7 @@
-using System.IO;
-using Xunit;
-using FluentAssertions;
-using Sceny.TestHelpers;
-
 namespace Sceny.TestHelpers.Tests
 {
     public class TemporaryFileTests
     {
-
         [Fact]
         public void Disposing_temporary_file_deletes_the_file()
         {
@@ -49,7 +43,7 @@ namespace Sceny.TestHelpers.Tests
         public void Implicit_cast_from_string_to_temporary_file()
         {
             // arrange
-            var fileName = "/any/full/path/e94c6311-fc88-44ad-b225-947d879cbc7d.tmp";
+            const string fileName = "/any/full/path/e94c6311-fc88-44ad-b225-947d879cbc7d.tmp";
             // act
             using TemporaryFile file = fileName;
             // assert

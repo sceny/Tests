@@ -10,9 +10,11 @@ namespace Sceny.TestHelpers
 
         public TemporaryFile() => FileName = Path.GetTempFileName();
 
-        public TemporaryFile(string fileName) => FileName = fileName ?? throw new ArgumentNullException("fileName");
+        public TemporaryFile(string fileName) =>
+            FileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
 
-        public FileInfo FileInfo => _fileInfo ?? (_fileInfo = new FileInfo(FileName));
+        public FileInfo FileInfo =>
+            _fileInfo ??= new FileInfo(FileName);
 
         public string FileName { get; private set; }
 
@@ -44,18 +46,18 @@ namespace Sceny.TestHelpers
 
         public void WriteAllText(string text) => File.WriteAllText(FileName, text);
 
-        public static implicit operator string(TemporaryFile temporaryFile)
-            => temporaryFile != null ? temporaryFile.FileName : null;
+        public static implicit operator string(TemporaryFile temporaryFile) =>
+            temporaryFile?.FileName;
 
-        public static implicit operator TemporaryFile(string fileName)
-            => new TemporaryFile(fileName);
+        public static implicit operator TemporaryFile(string fileName) =>
+            new(fileName);
 
-        protected bool Equals(TemporaryFile other)
-            => string.Equals(FileName, other.FileName);
+        protected bool Equals(TemporaryFile other) =>
+            string.Equals(FileName, other.FileName);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
             return Equals((TemporaryFile) obj);
